@@ -1,4 +1,6 @@
 const express = require('express');
+const bodyParser = require('body-parser');
+const cors = require('cors');
 const app = express();
 
 const mysql = require('mysql');
@@ -9,15 +11,25 @@ const db = mysql.createPool({
     database: 'cruddatabase'
 })
 
+app.use(cors());
+// allow grabbing info from frontend as json
+app.use(express.json());
+app.use(bodyParser.urlencoded({extended: true}));
 
-app.get("/", (req, res)=>{
-    const sqlInsert = "INSERT INTO movie_reviews (movieName, movieReview) VALUES ('harr12y', 'good movie');"
-    const sqlInsert2 = "SELECT * from movie_reviews;"
+app.get("/api/get", (req, res) => {
+  const sqlSelect = "SELECT * FROM movie_reviews;";
+  db.query(sqlSelect, (err, result) => {
+    res.send(result);
+  });
+});
 
-    db.query(sqlInsert, (err, result)=>{
-        res.send('Hello World');
-        console.log(error);
-    });
+app.post("/api/insert", (req, res) => {
+  const movieName = req.body.movieName;
+  const movieReview = req.body.movieReview;
+  const sqlInsert = "INSERT INTO movie_reviews (movieName, movieReview) VALUES (?, ?)";
+  db.query(sqlInsert, [movieName, movieReview], (err, result) => {
+    console.log(err);
+  });
 });
 
 app.listen(3001, () => {
