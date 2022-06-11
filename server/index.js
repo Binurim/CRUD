@@ -32,6 +32,24 @@ app.post("/api/insert", (req, res) => {
   });
 });
 
+app.delete("/api/delete/:movieName", (req, res) => {
+    const movieName = req.params.movieName;
+    const sqlDelete = "DELETE FROM movie_reviews WHERE movieName = ? ;";
+    db.query(sqlDelete, movieName, (err, result) => {
+      res.send(result);
+    });
+  });
+
+
+app.put("/api/update", (req, res) => {
+  const movieName = req.body.movieName;
+  const movieReview = req.body.movieReview;
+  const sqlUpdate ="UPDATE movie_reviews SET movieReview = ? WHERE movieName = ? ;";
+  db.query(sqlUpdate, [movieReview,movieName ], (err, result) => {
+    res.send(result);
+  });
+});
+
 app.listen(3001, () => {
     console.log("running on port 3001");
 });
