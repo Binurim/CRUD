@@ -1,6 +1,6 @@
 import '../App.css';
-import React, {useState, useEffect} from "react";
-import Axios from "axios";
+import React, {useState, useEffect} from 'react';
+import * as movieReviewService from '../services/movieReviewService';
 
 const MovieReview = () => {
 
@@ -10,20 +10,17 @@ const MovieReview = () => {
   const [newReview, setNewreview] = useState('');
 
   useEffect(() => {
-    getMovieReviews();
+    getMovieReviewsList();
   }, []);
 
-  const getMovieReviews = () => {
-    Axios.get("http://localhost:3001/api/get").then((response) => {
-      setMovieReviewList(response.data);
+  const getMovieReviewsList = () =>  {
+    movieReviewService.getMovieReviews().then((response)=> {
+      setMovieReviewList(response.data)
     });
   }
 
   const submitReview = () => {
-    Axios.post("http://localhost:3001/api/insert", {
-      movieName: movieName,
-      movieReview: review,
-    });
+    movieReviewService.createMovieReview(movieName, review);
     setMovieReviewList([...movieReviewList, {
       movieName: movieName,
       movieReview: review,
@@ -33,17 +30,14 @@ const MovieReview = () => {
   };
 
   const deleteMovieReview = (movie) => {
-    Axios.delete(`http://localhost:3001/api/delete/${movie}`).then((res) => {
-      getMovieReviews();
+    movieReviewService.deleteMovieReview(movie).then((res) => {
+      getMovieReviewsList();
     });
   };
 
   const updateMovieReview = (movieName) => {
-    Axios.put("http://localhost:3001/api/update", {
-      movieName: movieName,
-      movieReview: newReview,
-    }).then((res) => {
-      getMovieReviews();
+    movieReviewService.updateMovieReview(movieName, newReview).then((res) => {
+      getMovieReviewsList();
     });
     setNewreview('');
   };
@@ -67,11 +61,11 @@ const MovieReview = () => {
           onChange={(e) => setReview(e.target.value)}
         />
         <button onClick={submitReview}>Submit</button>
-        {movieReviewList.map((value) => {
+        {movieReviewList?.map((value) => {
           return (
             <div className="card">
               <form>
-                <h1> MovieName: {value.movieName}</h1>
+                <h2>MovieName: {value.movieName}</h2>
                 <p>{value.movieReview}</p>
                 <button
                   onClick={() => {
