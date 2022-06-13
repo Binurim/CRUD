@@ -40,7 +40,6 @@ app.delete("/api/delete/:movieName", (req, res) => {
     });
   });
 
-
 app.put("/api/update", (req, res) => {
   const movieName = req.body.movieName;
   const movieReview = req.body.movieReview;

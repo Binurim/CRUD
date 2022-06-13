@@ -28,7 +28,8 @@ function App() {
       movieName: movieName,
       movieReview: review,
     }]);
-
+    document.getElementById('inputMovie').value = '';
+    document.getElementById('inputReview').value = '';
   };
 
   const deleteMovieReview = (movie) => {
@@ -44,7 +45,7 @@ function App() {
     }).then((res) => {
       getMovieReviews();
     });
-    setNewreview("");
+    setNewreview('');
   };
 
   return (
@@ -55,40 +56,43 @@ function App() {
         <input
           type="text"
           name="movieName"
+          id="inputMovie"
           onChange={(e) => setMovieName(e.target.value)}
         />
         <label>Review:</label>
         <input
           type="text"
           name="review"
+          id="inputReview"
           onChange={(e) => setReview(e.target.value)}
         />
         <button onClick={submitReview}>Submit</button>
-
         {movieReviewList.map((value) => {
           return (
             <div className="card">
-              <h1> MovieName: {value.movieName}</h1>
-              <p>{value.movieReview}</p>
-              <button
-                onClick={() => {
-                  deleteMovieReview(value.movieName);
-                }}
-              >
-                Delete
-              </button>
-              <input
-                type="text"
-                id="updateInput"
-                onChange={(e) => setNewreview(e.target.value)}
-              />
-              <button
-                onClick={() => {
-                  updateMovieReview(value.movieName);
-                }}
-              >
-                Update
-              </button>
+              <form>
+                <h1> MovieName: {value.movieName}</h1>
+                <p>{value.movieReview}</p>
+                <button
+                  onClick={() => {
+                    deleteMovieReview(value.movieName);
+                  }}
+                >
+                  Delete
+                </button>
+                <input
+                  type="text"
+                  id="updateInput"
+                  onChange={(e) => setNewreview(e.target.value)}
+                />
+                <button
+                  onClick={() => {
+                    updateMovieReview(value.movieName);
+                  }}
+                >
+                  Update
+                </button>
+              </form>
             </div>
           );
         })}
