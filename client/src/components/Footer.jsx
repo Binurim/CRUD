@@ -3,7 +3,7 @@ import '../App.css'
 
 const Footer = () => {
     return (
-      <footer className="bg-light text-center p-3 center text-lg-start footer">
+      <footer className="text-center p-3 center text-lg-start footer">
         <div className="text-center">
           © 2022 Copyright:  Movie Review App
         </div>
