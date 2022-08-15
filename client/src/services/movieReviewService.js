@@ -11,12 +11,12 @@ export const createMovieReview = (movieName, review) => {
   });
 };
 
-export const updateMovieReview = (movieName, newReview) => {
+export const updateMovieReview = (movieId, newReview) => {
   return axios.put("http://localhost:3001/api/update", {
-    movieName: movieName,
+    movieId: movieId,
     movieReview: newReview,
   });
 };
-export const deleteMovieReview = (movie) => {
-  return axios.delete(`http://localhost:3001/api/delete/${movie}`);
+export const deleteMovieReview = (movieId) => {
+  return axios.delete(`http://localhost:3001/api/delete/${movieId}`);
 };

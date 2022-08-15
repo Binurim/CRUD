@@ -9,14 +9,14 @@ const EditMovieReview = (props) => {
     movieReviewService.getMovieReviews();
   };
 
-  const deleteMovieReview = (movie) => {
-    movieReviewService.deleteMovieReview(movie).then((res) => {
+  const deleteMovieReview = (movieId) => {
+    movieReviewService.deleteMovieReview(movieId).then((res) => {
       getMovieReviewsList();
     });
   };
 
-  const updateMovieReview = (movieName) => {
-    movieReviewService.updateMovieReview(movieName, newReview).then((res) => {
+  const updateMovieReview = (movieId) => {
+    movieReviewService.updateMovieReview(movieId, newReview).then((res) => {
       getMovieReviewsList();
     });
     setNewreview('');
@@ -29,7 +29,7 @@ const EditMovieReview = (props) => {
         <p>{props.movie.movieReview}</p>
         <button
           onClick={() => {
-            deleteMovieReview(props.movie.movieName);
+            deleteMovieReview(props.movie.id);
           }}
         >
           Delete
@@ -41,7 +41,7 @@ const EditMovieReview = (props) => {
         />
         <button
           onClick={() => {
-            updateMovieReview(props.movie.movieName);
+            updateMovieReview(props.movie.id);
           }}
         >
           Update
